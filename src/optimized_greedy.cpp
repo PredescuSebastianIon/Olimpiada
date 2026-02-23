@@ -49,15 +49,13 @@ int main()
             carry--;
         } else if (evens_size == 0) {
             // case two - only odds left
-            curr_sum = curr_sum + odds[odds_size - 1] + carry;
-            odds++;
+            curr_sum = curr_sum + odds[odds_size - 1] - carry;
             odds_size--;
             carry++;
         } else {
             // case three - both left
-            if (curr_sum + odds[odds_size - 1] > curr_sum - evens[0]) {
-                curr_sum = curr_sum + odds[odds_size - 1] + carry;
-                odds++;
+            if (odds[odds_size - 1] - carry > -evens[0] + carry) {
+                curr_sum = curr_sum + odds[odds_size - 1] - carry;
                 odds_size--;
                 carry++;
             } else {

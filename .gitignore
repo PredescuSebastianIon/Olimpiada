@@ -1,0 +1,11 @@
+# binaries
+basic_greedy
+brute_force
+optimized_greedy
+generator
+
+# tests
+input/
+output/
+ref/
+

@@ -10,14 +10,14 @@ int main(int argc, char *argv[])
 
     const char *out_file = argv[1];
     int n = atoi(argv[2]);
-    int max_abs = 1000;
+    int max_abs = 1e8;
     if (argc >= 4)
         max_abs = atoi(argv[3]);
     unsigned seed = (argc >= 5) ? (unsigned)atoi(argv[4]) : (unsigned)time(nullptr);
     srand(seed);
 
     if (n < 1) n = 1;
-    if (n > 10) n = 10;
+    if (n > 1000000) n = 1000000;  // problem limit
     if (max_abs < 1) max_abs = 1;
 
     std::ofstream fout(out_file);
