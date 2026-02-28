@@ -4,7 +4,6 @@
 #include <assert.h>
 #include <stdio.h>
 #include <climits>
-#include <limits.h>
 
 #define sign(x) ((x) & 1 ? 1 : -1)
 

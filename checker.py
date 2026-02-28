@@ -12,12 +12,14 @@ params = [
     # ["Subtask3", 1000, 20, 10**6],
     ["Subtask4", 1000, 10, 10**7],
     ["Subtask5", 10000, 10, 10**8],
-    ["Subtask6", 10000, 10, 10**9],
+    ["Subtask6", 10**4, 10, 10**9],
+    ["Subtask7", 10**4 + 5 * 10**3, 10, 10**9],
 ]
 
 SRC_DIR = "./src"
 INPUT_DIR = "input"
 OUTPUT_DIR = "output"
+REF_DIR = "ref"
 REF_NAME = "answer.ref"
 RUN_TIMEOUT = 2
 REF_TIMEOUT = 60  # timeout for reference solution (good_src), e.g. for large n
@@ -57,6 +59,38 @@ def generateTests():
             if r.returncode != 0:
                 print(f"Generator failed for {test_path}: {r.stderr}")
                 sys.exit(1)
+
+
+def generateRefs():
+    """Generate test files into input/ and reference outputs into ref/ using good_src."""
+    build()
+    generateTests()
+    if not os.path.isdir(INPUT_DIR):
+        return
+    os.makedirs(REF_DIR, exist_ok=True)
+    in_files = sorted(f for f in os.listdir(INPUT_DIR) if f.endswith(".in"))
+    for filename in in_files:
+        test_name = filename[:-3]
+        in_path = os.path.join(INPUT_DIR, filename)
+        ref_path = os.path.join(REF_DIR, f"{test_name}.ref")
+        try:
+            with open(in_path, "rb") as fin:
+                r = subprocess.run(
+                    [f"./src/{good_src}"],
+                    stdin=fin,
+                    capture_output=True,
+                    text=True,
+                    timeout=REF_TIMEOUT,
+                )
+        except subprocess.TimeoutExpired:
+            print(f"Warning: {good_src} timeout on {filename}, skipping ref.")
+            continue
+        if r.returncode != 0:
+            print(f"Warning: {good_src} exit {r.returncode} on {filename}, skipping ref.")
+            continue
+        with open(ref_path, "w") as f:
+            f.write(r.stdout)
+    print(f"Refs written to {REF_DIR}/ (using {good_src}).")
 
 
 def testsAlts():
@@ -159,6 +193,7 @@ def printUsage():
     print("Commands:")
     print("  build         Build generator and solutions")
     print("  generateTests Generate test cases into input/")
+    print("  generateRefs  Generate tests and refs (using good_src) into input/ and ref/")
     print("  testsAlts     Run good_src (reference) vs each alt in alt_src and compare")
     print("  all           Build, generate tests, then run checks")
 
@@ -170,6 +205,8 @@ if __name__ == "__main__":
         build()
     elif sys.argv[1] == "generateTests":
         generateTests()
+    elif sys.argv[1] == "generateRefs":
+        generateRefs()
     elif sys.argv[1] == "testsAlts":
         testsAlts()
     elif sys.argv[1] == "all":

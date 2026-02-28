@@ -12,7 +12,6 @@
 constexpr int NMAX = 1e6 + 2;
 long long array1[NMAX], array2[NMAX];
 long long n, v[NMAX];
-bool marked[NMAX];
 int main(void)
 {
     std::cin >> n;
@@ -39,7 +38,7 @@ int main(void)
     long long curr_sum = 0;
     long long carry = 0;
     
-    // these are 2 polong longers towards the actually arrays
+    // pointers to current odds/evens segments (swap each step)
     long long *odds = array1, *evens = array2;
     long long odds_size = array1_size, evens_size = array2_size;
     

@@ -28,9 +28,9 @@ int main()
         long long curr = 0;
         long long plus = 0;
         for (int i = 0; i < n; i++) {
-            curr += sign(v[permutation[i]] + plus) * (v[permutation[i]] + plus);
-
-            plus = plus + sign(v[permutation[i]] + plus);
+            long long cur_val = v[permutation[i]] - plus;  // current value = original + delta, plus = -delta
+            curr += sign(cur_val) * cur_val;
+            plus = plus + sign(cur_val);
 
             Max = std::max(Max, curr);
         }
