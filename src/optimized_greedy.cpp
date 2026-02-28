@@ -5,42 +5,47 @@
 #include <stdio.h>
 #include <climits>
 
+#define sign(x) ((x) & 1 ? 1 : -1)
+
 // std::ifstream fin("tasks.in");
 // std::ofstream fout("tasks.out");
 constexpr int NMAX = 1e6 + 2;
-int n, v[NMAX];
+long long array1[NMAX], array2[NMAX];
+long long n, v[NMAX];
 bool marked[NMAX];
-int main()
+int main(void)
 {
     std::cin >> n;
-    for (int i = 0; i < n; i++) {
+    for (long long i = 0; i < n; i++) {
         std::cin >> v[i];
     }
 
+    
     assert(n > 0);
-
+    
     std::sort(v, v + n);
-
+    
     // arrays1 - odds, array2 - evens
-    int array1[NMAX], array2[NMAX];
-    int array1_size = 0, array2_size = 0;
-    for (int i = 0; i < n; i++) {
+    long long array1_size = 0, array2_size = 0;
+    for (long long i = 0; i < n; i++) {
         if (v[i] & 1) {
             array1[array1_size++] = v[i];
         } else {
             array2[array2_size++] = v[i];
         }
     }
-
-    int Max = INT_MIN;
-    int curr_sum = 0;
-    int carry = 0;
-
-    // these are 2 pointers towards the actually arrays
-    int *odds = array1, *evens = array2;
-    int odds_size = array1_size, evens_size = array2_size;
-
+    
+    long long Max = LLONG_MIN;
+    long long curr_sum = 0;
+    long long carry = 0;
+    
+    // these are 2 polong longers towards the actually arrays
+    long long *odds = array1, *evens = array2;
+    long long odds_size = array1_size, evens_size = array2_size;
+    
+    // return 0;
     for (int step = 0; step < n; step++) {
+        
         if (odds_size == 0) {
             // case one - only evens left
             curr_sum = curr_sum - evens[0] + carry;

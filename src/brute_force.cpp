@@ -5,30 +5,32 @@
 #include <stdio.h>
 #include <climits>
 
+#define sign(x) ((x) & 1 ? 1 : -1)
+
 // std::ifstream fin("tasks.in");
 // std::ofstream fout("tasks.out");
 constexpr int NMAX = 1e6 + 2;
-int n, v[NMAX];
-int permutation[NMAX];
+int n;
+long long permutation[NMAX], v[NMAX];
 int main()
 {
     std::cin >> n;
     for (int i = 0; i < n; i++) {
         std::cin >> v[i];
-        permutation[i] = i;
+        permutation[i] = i * 1LL;
     }
 
     assert(n > 0);
 
-    int Max = INT_MIN;
+    long long Max = LLONG_MIN;
 
     do {
-        int curr = 0;
-        int plus = 0;
+        long long curr = 0;
+        long long plus = 0;
         for (int i = 0; i < n; i++) {
-            curr += ((v[permutation[i]] + plus) & 1 ? 1 : -1) * (v[permutation[i]] + plus);
+            curr += sign(v[permutation[i]] + plus) * (v[permutation[i]] + plus);
 
-            plus = plus + ((v[permutation[i]] + plus) & 1 ? -1 : 1);
+            plus = plus + sign(v[permutation[i]] + plus);
 
             Max = std::max(Max, curr);
         }

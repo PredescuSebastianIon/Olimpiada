@@ -4,11 +4,14 @@
 #include <assert.h>
 #include <stdio.h>
 #include <climits>
+#include <limits.h>
+
+#define sign(x) ((x) & 1 ? 1 : -1)
 
 // std::ifstream fin("tasks.in");
 // std::ofstream fout("tasks.out");
 constexpr int NMAX = 1e6 + 2;
-int n, v[NMAX];
+long long n, v[NMAX];
 bool marked[NMAX];
 int main()
 {
@@ -19,11 +22,12 @@ int main()
 
     assert(n > 0);
 
-    int Max = INT_MIN;
-    int curr_sum = 0;
+    long long Max = LLONG_MIN;
+    long long curr_sum = 0;
 
     for (int i = 0; i < n; i++) {
-        int poz = -1, curr_max = INT_MIN;
+        int poz = -1;
+        long long curr_max = LLONG_MIN;
         for (int j = 0; j < n; j++) {
             if (marked[j])
                 continue;

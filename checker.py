@@ -8,10 +8,11 @@ import subprocess
 DEFAULT_MAX_ABS = 1000
 params = [
     # ["Subtask1", 8, 100],
-    # ["Subtask2", 9, 100],
-    ["Subtask3", 1000, 20, 10**6],
-    # ["Subtask4", 1000, 10, 10**7],
-    # ["Subtask5", 10000, 10, 10**9],
+    # ["Subtask2", 9, 10],
+    # ["Subtask3", 1000, 20, 10**6],
+    ["Subtask4", 1000, 10, 10**7],
+    ["Subtask5", 10000, 10, 10**8],
+    ["Subtask6", 10000, 10, 10**9],
 ]
 
 SRC_DIR = "./src"
