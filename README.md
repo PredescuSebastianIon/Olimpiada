@@ -1,18 +1,7 @@
-# Tasks olimpiad problem
+# Tasks: Olympiad problem
 
 **Author**: Predescu Sebastian-Ion
 
+Task description: [tasks.pdf](tasks.pdf)
 
-# Brute Force
-
-Time Complexity: $O(n!)$
-
-Generate all permutations.
-
-
-# Greedy
-
-
-
-# Optimized greedy
-
+Solution Overview: [SOLUTIONS.md](SOLUTIONS.md)
